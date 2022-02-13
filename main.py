@@ -38,7 +38,6 @@ if __name__ == '__main__':
             if PC[0] == skempi1.iloc[j, 0] and PC[1] == skempi1.iloc[j, 1] and PC[2] == skempi1.iloc[j, 2] and skempi2.iloc[i, 1] == skempi1.iloc[j, 3]:
                 skempi1.iloc[j, 19:48] = skempi2.iloc[i, :]
 
-    print(m)
     skempi1.to_csv('combined.csv')
 
     print('yes')
