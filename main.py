@@ -6,7 +6,8 @@ import pandas as pd
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    skempi1 = pd.read_excel('Final Integrated Volumes (Skempi Dataset).xlsx', index_col = 0)
+    skempi1 = pd.read_excel(
+        'Final Integrated Volumes (Skempi Dataset).xlsx', index_col=0)
     skempi2 = pd.read_excel('Copy of skempi_v2(1).xlsx')
 
     colnames2 = skempi2.columns.values
@@ -20,7 +21,6 @@ if __name__ == '__main__':
                 skempi1.iloc[j, 19:48] = skempi2.iloc[i, :]
 
     skempi1.to_csv('combined.csv')
-
 
     print('yes')
 
