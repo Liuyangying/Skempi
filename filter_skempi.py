@@ -63,10 +63,36 @@ def charge_filter(combined, start_charge, end_charge):
     return combined_filtered
 
 
+# function to search query in a specific column
+def query_column(combined, column, query):
+    if type(column) is str:
+        combined_filtered = combined[combined[column].str.contains(query)]
+        print(combined_filtered)
+    elif type(column) is int:
+        # index ignores workindex column can be confusing - start at 1
+        column = column - 1
+        combined_filtered = combined[combined.iloc[:,
+                                                   column].str.contains(query)]
+
+    print(combined_filtered)
+    return combined_filtered
+
+
+# function to search query in all columns
+def query_all_columns(combined, query):
+    mask = combined.applymap(
+        lambda x: isinstance(x, str) and query in x).any(1)
+
+    print(combined[mask])
+    return combined[mask]
+
+
 def main():
     i = parseArg()
     combined = pd.read_csv(i, index_col=0)
-    charge_filter(combined, 0, 0)
+    # charge_filter(combined, 0, 0)
+    # query_column(combined, 1, "HELLO")
+    query_all_columns(combined, "SF")
 
 
 if __name__ == "__main__":
