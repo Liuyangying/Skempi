@@ -87,12 +87,25 @@ def query_all_columns(combined, query):
     return combined[mask]
 
 
+def query_math_operators(combined, column, operator, num):
+    if operator == '<':
+        combined_filtered = combined[combined[column] < num]
+    elif operator == '>':
+        combined_filtered = combined[combined[column] > num]
+    elif operator == '=':
+        combined_filtered = combined[combined[column] == num]
+
+    print(combined_filtered)
+    return combined_filtered
+
+
 def main():
     i = parseArg()
     combined = pd.read_csv(i, index_col=0)
     # charge_filter(combined, 0, 0)
-    # query_column(combined, 1, "HELLO")
-    query_all_columns(combined, "SF")
+    # query_column(combined, "PDBCode", "1JCK")
+    # query_all_columns(combined, "1JCK")
+    # query_math_operators(combined, "[MUTA]ELEC_-1+1", ">", 800)
 
 
 if __name__ == "__main__":
