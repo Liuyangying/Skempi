@@ -16,13 +16,6 @@ def chainpair_mutation(combined, columns):
     #columns= '#Pdb'
     PDB_chain_unique = combined.loc[:, columns].unique()
 
-    # match_PDB_chain_split = []
-    # for i in range(0, len(PDB_chain_unique)):
-    #     PDB_split = PDB_chain_unique[i].split('_')[0]
-    #     match_PDB_chain_split.append(PDB_split)
-    # match_PDB_chain_split = pd.DataFrame(match_PDB_chain_split)
-    # split_group = match_PDB_chain_split.groupby([0]).size()
-
     if columns == '#Pdb':
         c = 21
         l = 20
@@ -62,15 +55,13 @@ def chainpair_mutation(combined, columns):
 
 if __name__ == '__main__':
 
-    combined = load('combined1.csv')
+    combined = load('combined.csv')
     add_table, add_sum = chainpair_mutation(combined, '#Pdb')
     ori_table, ori_sum = chainpair_mutation(combined, 'pdb_chain')
 
-    add_table.sort_index()
-    ori_table.sort_index()
-
-    check = add_table.eq(ori_table)
-
+    check = add_table.equals(ori_table)
+    print(check)
+    print(add_sum == ori_sum)
 
 
     print("yes")
