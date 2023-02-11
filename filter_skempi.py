@@ -15,7 +15,9 @@ def parseArg():
                         help='Input SKEMPI file to be filtered.')
     # parser.add_argument('-d', nargs='?', metavar='distance',
     #                     type=int, help='Resolution for distance checking.')
-    # parser.add_argument('-o', nargs='?', metavar='OutputPDB',
+    # parser.add_argument('-o', nargs='?', metavar='Outp
+    #
+    # utPDB',
     #                     help='Output PDB file name')
 
     # parse input file - if not given, set as default file i
