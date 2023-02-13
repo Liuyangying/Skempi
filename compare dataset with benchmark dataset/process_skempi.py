@@ -38,22 +38,26 @@ def average_elec_sheet(path):
     # electr_sheet['PDBCode']
     # names = electr_sheet.columns
     electr_sheet.insert(0, "PDB_mut",  electr_sheet['PDBCode']+'_'+electr_sheet['MutantList'])
-    electr_sheet = electr_sheet.drop(['WorkIndex', 'PDBCode', 'Chain1', 'Chain2', 'MutantList',
+    electr_sheet2 = electr_sheet.drop(['WorkIndex', 'PDBCode', 'Chain1', 'Chain2', 'MutantList',
        'Unnamed: 20', 'Unnamed: 21', 'Unnamed: 22', 'Unnamed: 23',
        'Unnamed: 24', 'Unnamed: 25'],axis=1)
+    electr_sheet3 = electr_sheet.loc[:,['PDBCode', 'Chain1', 'Chain2', 'MutantList']]
+    electr_sheet3.insert(0, "PDB_mut", electr_sheet3['PDBCode']+'_'+electr_sheet3['MutantList'])
+    electr_sheet3 = electr_sheet3.drop_duplicates(subset=['PDB_mut'])
 
-    electr_sheet2 = electr_sheet.groupby('PDB_mut').mean()
+    electr_sheet2 = electr_sheet2.groupby('PDB_mut').mean()
     electr_sheet2.insert(0, "PDB_mut", electr_sheet2.index)
     electr_sheet2.index = range(len(electr_sheet2))
     electr_sheet2['PDB_mut'] = electr_sheet2['PDB_mut'].apply(lambda x: 0 if len(x.split(','))>1 else x)
     electr_sheet2 = electr_sheet2[electr_sheet2['PDB_mut'] != 0]
+    merge_electr_sheet = pd.merge(electr_sheet3, electr_sheet2, on='PDB_mut', how='inner')
 
-    return electr_sheet2
+    return merge_electr_sheet
 
 
 if __name__ == '__main__':
 
-    path = 'D:\PycharmProjects\Skempiv2\compare dataset with benchmark dataset\skempi2_processed_final.csv'
+    path = 'D:\PycharmProjects\Skempiv2\compare dataset with benchmark dataset\skempi2_processed_final(4958).csv'
     skempi_nondup = average_affinity_skempi(path)
     # print(skempi.iloc[0,1])
 
@@ -63,7 +67,7 @@ if __name__ == '__main__':
     electr_sheet_average = average_elec_sheet(path2)
     merge_sheet = pd.merge(skempi_nondup, electr_sheet_average, on='PDB_mut', how='inner')
 
-    merge_sheet.to_csv("concat_norep_sheet.csv")
+    merge_sheet.to_csv("concat_norep_sheet(3618).csv")
 
 
     print('yes')
